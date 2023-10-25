@@ -6,18 +6,22 @@ Retrieval-augmented generation (RAG) is an AI framework for improving the qualit
 supplement the LLM’s internal representation of information. Implementing RAG in an LLMbased question answering system has two main benefits: It ensures that the model has
 access to the most current, reliable facts, and that users have access to the model’s sources,
 ensuring that its claims can be checked for accuracy and ultimately trusted.
-Problem Statement
+
+### Problem Statement
 The goal of the project is to build a robust generative search system capable of effectively
 and accurately answering questions from a policy document using the RAG framework
 described above
-Dataset
+
+##Dataset
 The data used for the project is a single long life insurance policy document
-Project Approach
+
+## Project Approach
 The project is built using three layers namely:
 - Embedding Layer
 - Search layer
 - Generation Layer
-Embedding Layer
+  
+### Embedding Layer
 Here the PDF document needs to be effectively processed, cleaned, and chunked for the
 embeddings.
 We have used the pdfplumber library to extract text/tables etc from multiple pdf’s
@@ -31,7 +35,8 @@ extraneous information in a page, and all the text pieces in that page will like
 interrelated.
 2. We want to have larger chunk sizes to be able to pass appropriate context to the LLM
 during the generation layer.
-Search Layer
+
+### Search Layer
 Here we have followed the following steps:
 - Generate and Store Embeddings using OpenAI and ChromaDB
 - We have embedded the pages in the dataframe through OpenAI's `text-embeddingada-002` model, and store them in a ChromaDB collection.
@@ -43,14 +48,16 @@ passing the query paired with each of the retrieved responses into a cross-encod
 to score the relevance of the response w.r.t. the query.
 - We have used the 'cross-encoder/ms-marco-MiniLM-L-12-v2' cross encoder from
 sentence-transformer library
-Generation Layer
+
+### Generation Layer
 Here we followed the following steps:
 - Once we have the final top search results, we can pass it to an GPT 3.5 along with
 the user query and a well-engineered prompt, to generate a direct answer to the
 query along with citations, rather than returning whole pages/chunks.
 - We have written an exhaustive prompt with clear instructions and passed the user
 query and top searched results to the LLM and generated a response.
-Testing of the RAG system with three user designed queries.
+
+### Testing of the RAG system with three user designed queries.
 The three queries used to test the system are as follows:
 1. What is the name of the policyholder and when was this policy issued?
 2. What are the premium rates for the members insured?
